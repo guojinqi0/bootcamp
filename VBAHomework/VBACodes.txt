@@ -1,0 +1,182 @@
+Sub StockAnalyzer()
+
+' Allow the mighty stockanalyzer to run on every worksheet
+Dim ws As Worksheet
+For Each ws In ThisWorkbook.Worksheets
+ws.Select
+
+' Create header for the summary table
+Range("i1").Value = "Ticker"
+Range("j1").Value = "TotalStockVolume"
+Range("k1").Value = "YearlyChange"
+Range("l1").Value = "PercentageChange"
+Range("n2").Value = "Greatest % Increase"
+Range("n3").Value = "Greatest % Decrease"
+Range("n4").Value = "Greatest Total Volume"
+Range("O1").Value = "Ticker"
+Range("p1").Value = "Value"
+
+' Dimdimdim
+Dim Ticker As String
+Dim TotalStockVolume As Double
+Dim OpeningPrice As Double
+Dim ClosingPrice As Double
+Dim YearlyChange As Double
+Dim PercentChange As Double
+Dim Summary_Table_Row As Integer
+
+' Set the starting value for for loop calculation
+TotalStockVolume = 0
+YearlyChange = 0
+OpeningPrice = Cells(2, 3).Value
+Summary_Table_Row = 2
+
+' identify the range of the for loop
+For I = 2 To Range("A2").End(xlDown).Row
+
+    ' If the stocks have the same ticker symbol
+    If Cells(I, 1).Value = Cells(I + 1, 1).Value Then
+    
+        ' Grab the ticker name
+        Ticker = Cells(I, 1).Value
+    
+        ' Add to the total stock volume
+        TotalStockVolume = (TotalStockVolume + Cells(I, 7).Value)
+        
+    ' Check if we are still within the same ticker symbol, if it is not...
+    Else
+    
+        ' Find the closing price of last ticker
+        ClosingPrice = Cells(I, 6).Value
+        
+        ' Make sure the last row within the previous ticker is also included in its total volume
+        TotalStockVolume = TotalStockVolume + Cells(I, 7).Value
+        
+        ' Print the total volume to the Summary Table
+        Range("J" & Summary_Table_Row).Value = TotalStockVolume
+        
+        ' Print the ticker number in the Summary Table
+        Range("I" & Summary_Table_Row).Value = Ticker
+    
+        ' Calaulate yearly change of last ticker
+        YearlyChange = ClosingPrice - OpeningPrice
+    
+        ' Print the yearly change to the Summary Table
+        Range("K" & Summary_Table_Row).Value = YearlyChange
+    
+        ' Also, Check if the openingprice is 0 which would cause an error in Percentage Change
+        If OpeningPrice = 0 Then
+            PercentageChange = "0%"
+        
+            Else
+    
+            ' Calculate Percentage Change
+            PercentageChange = FormatPercent(YearlyChange / OpeningPrice, 2)
+ 
+        End If
+    
+        ' Print the Percentage Change to the Summary Table
+        Range("L" & Summary_Table_Row).Value = PercentageChange
+    
+        ' Find the opening price of the next ticker
+        OpeningPrice = Cells(I + 1, 3).Value
+    
+        ' Grab the new Ticker symbol
+        Ticker = Cells(I + 1, 1).Value
+        
+        ' Reset the Total Volume
+        TotalStockVolume = 0
+        ' Reset the YearlyChange
+        YearlyChange = 0
+        ' Add one to the summary table row
+        Summary_Table_Row = Summary_Table_Row + 1
+    
+    End If
+    
+Next I
+  
+' Conditional Formatting (use macro and copy over the codes)
+
+ Columns("L:L").Select
+    Selection.FormatConditions.Add Type:=xlCellValue, Operator:=xlGreater, _
+        Formula1:="=0"
+    Selection.FormatConditions(Selection.FormatConditions.Count).SetFirstPriority
+    With Selection.FormatConditions(1).Font
+        .Color = -16752384
+        .TintAndShade = 0
+    End With
+    With Selection.FormatConditions(1).Interior
+        .PatternColorIndex = xlAutomatic
+        .Color = 13561798
+        .TintAndShade = 0
+    End With
+    Selection.FormatConditions(1).StopIfTrue = False
+    Selection.FormatConditions.Add Type:=xlCellValue, Operator:=xlLess, _
+        Formula1:="=0"
+    Selection.FormatConditions(Selection.FormatConditions.Count).SetFirstPriority
+    With Selection.FormatConditions(1).Font
+        .Color = -16383844
+        .TintAndShade = 0
+    End With
+    With Selection.FormatConditions(1).Interior
+        .PatternColorIndex = xlAutomatic
+        .Color = 13551615
+        .TintAndShade = 0
+    End With
+    Selection.FormatConditions(1).StopIfTrue = False
+    Selection.FormatConditions.Add Type:=xlCellValue, Operator:=xlEqual, _
+        Formula1:="=0"
+    Selection.FormatConditions(Selection.FormatConditions.Count).SetFirstPriority
+    With Selection.FormatConditions(1).Font
+        .Color = -16754788
+        .TintAndShade = 0
+    End With
+    With Selection.FormatConditions(1).Interior
+        .PatternColorIndex = xlAutomatic
+        .Color = 10284031
+        .TintAndShade = 0
+    End With
+    Selection.FormatConditions(1).StopIfTrue = False
+  
+  ' Find the greatest % increase value
+  Dim MaxIncrease As Double
+  MaxIncrease = Application.WorksheetFunction.Max(Range("L2", Range("L2").End(xlDown)))
+
+  ' Print the value to the summary table
+  Cells(2, 16).Value = FormatPercent(MaxIncrease, 2)
+  
+  ' Find the greatest % increase value
+  Dim MinIncrease As Double
+  MinIncrease = Application.WorksheetFunction.Min(Range("L2", Range("L2").End(xlDown)))
+  
+  ' Print the value to the summary table
+  Cells(3, 16).Value = FormatPercent(MinIncrease, 2)
+
+  ' Find the greatest total volume value
+  Dim MaxVolume As Double
+  MaxVolume = Application.WorksheetFunction.Max(Range("J2", Range("J2").End(xlDown)))
+  
+  ' Print the value to the summary table
+  Cells(4, 16).Value = MaxVolume
+  
+  ' Identify the range of cells where we are going to find the respective ticker name
+  For tickerrow = 2 To Range("L2").End(xlDown).Row
+  
+  ' Locate the ticker with max % increase value
+    If Cells(tickerrow, 12) = MaxIncrease Then
+    Cells(2, 15).Value = Cells(tickerrow, 9).Value
+    
+  ' Locate the ticker with MinIncrease
+    ElseIf Cells(tickerrow, 12) = MinIncrease Then
+    Cells(3, 15).Value = Cells(tickerrow, 9).Value
+    
+  ' Locate the ticker with MaxVolume
+    ElseIf Cells(tickerrow, 10) = MaxVolume Then
+    Cells(4, 15).Value = Cells(tickerrow, 9).Value
+    End If
+    
+    Next tickerrow
+    
+Next ws
+
+End Sub
