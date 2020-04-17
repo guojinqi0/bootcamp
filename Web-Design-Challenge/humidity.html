@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
+    <title>Humidity Dashboard</title>
+  </head>
+  
+  
+  <body style="background-color:rgb(223, 222, 222);">
+    <!-- Navigation Bar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <a class="navbar-brand" style="background-color:rgb(6, 137, 141); color:white; font-family: Georgia, 'Times New Roman', Times, serif; font-weight: bold;" href="index.html">Latitude</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+      
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav ml-auto">
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  Plots
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                  <a class="dropdown-item" href="max_temperature.html">Max Temperature</a>
+                  <a class="dropdown-item" href="humidity.html">Humidity</a>
+                  <a class="dropdown-item" href="cloudiness.html">Cloudiness</a>
+                  <a class="dropdown-item" href="wind_speed.html">Wind Speed</a>
+                </div>
+            </li>
+            <li class="nav-item active">
+              <a class="nav-link" href="comparison.html">Comparison<span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="data.html">Data</a>
+            </li>
+           
+        </div>
+      </nav>
+
+    <!-- Put extra space between navbar and containers below -->  
+    <br>
+  
+    <!-- Create container and add content -->
+    <div class="container-sm">
+      <div class="row">
+        <div class="col-lg-6" style="background-color: white;">
+            
+          <h1 class="pt-3" style="color:rgb(6, 137, 141); font-family:Georgia, 'Times New Roman', Times, serif; font-weight: bold; font-size: 22pt;">Humidity</h1>
+          <hr>
+                        
+          <img width="100%" height="50%" src="Resources/assets/images/Fig2.png" alt="Humidity">
+            
+          <p>There isn't a strong correlation between humidity and latitude. The humidity levels are scatterly distributed even for the same latitude. Most of the cities have a humidity level between 60%-100%.</p>
+            
+        </div>
+
+      
+        
+        <div class="col-lg-6 ml-auto" style="background-color: white;">
+            
+          <h2 class="pt-3" style="color:rgb(6, 137, 141); font-family:Georgia, 'Times New Roman', Times, serif; font-weight: bold; font-size: 22pt;">Visualization</h2>
+            <hr>
+            
+            
+            <div class="row">
+                <div class="col-6">
+                    <a href="max_temperature.html">
+                        <img width="100%" height="100%" src="Resources/assets/images/Fig1.png" alt="Max Temperature">
+                    </a>
+                </div>
+                <div class="col-6">
+                    <a href="humidity.html">
+                        <img width="100%" height="100%" class="img-thumbnail" src="Resources/assets/images/Fig2.png" alt="Humidity">
+                    </a>
+                </div>
+            </div>
+    
+            <div class="row">
+                <div class="col-6">
+                    <a href="cloudiness.html">
+                        <img width="100%" height="100%" src="Resources/assets/images/Fig3.png" alt="Cloudiness">
+                    </a>
+                </div>
+                <div class="col-6">
+                    <a href="wind_speed.html">
+                        <img width="100%" height="100%" src="Resources/assets/images/Fig4.png" alt="Wind Speed">
+                    </a>
+                </div>
+            </div>
+                  
+            
+            
+            
+        </div>
+    </div>
+    
+    
+   
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+  </body>
+</html>
