@@ -20,8 +20,8 @@ var selectButton = d3.select("#filter-btn");
 function filter() {
     // Declare variables
     var inputValue = d3.select("#datetime").node().value;
-    table = document.getElementById("ufo-table");
-    tr = table.getElementsByTagName("tr");
+    var table = document.getElementById("ufo-table");
+    var tr = table.getElementsByTagName("tr");
      // Loop through all table rows, and hide those who don't match the search query
     for (i = 0; i < tr.length; i++) {
     td = tr[i].getElementsByTagName("td")[0];
